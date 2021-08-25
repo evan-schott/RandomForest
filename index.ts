@@ -88,7 +88,7 @@ class RandomForest {
     createForest() {
         for (let i = 0; i < this.numTrees; i++) { 
             let root: TreeNode = new TreeNode({type: NodeType.root, dataset: this.dataset});
-            buildTree(root, randomSubSet(this.featureSet, this.numFeatures)); // Builds tree with random subset of features
+            buildTree(root, randomSubSetReplacement(this.featureSet, this.numFeatures)); // Builds tree with random subset of features with replacement
             this.decisionTrees.push(root);
         }
     }
@@ -191,6 +191,16 @@ function randomSubSet(list: any[], subSetLen: number):any[] {
         let swapValue = list[swapIndex];
         list[swapIndex] = list[i]; // Make sure each item has equal chance, and no duplicates
         returnList.push(swapValue);
+    }
+
+    return returnList;
+}
+
+function randomSubSetReplacement(list: any[], subSetLen: number):any[] {
+    let returnList = [];
+    let listLen = list.length;
+    for (let i = 0; i < subSetLen; i++) {
+        returnList.push(Math.floor(Math.random()*listLen));
     }
 
     return returnList;
